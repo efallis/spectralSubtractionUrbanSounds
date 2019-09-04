@@ -12,9 +12,6 @@ PATH_TO_FUNCTIONS = 'YOUR_PATH';
 % https://urbansounddataset.weebly.com/download-urbansound8k.html
 PATH_TO_CLIPS = 'YOUR_PATH';
 
-% addpath('C:/Users/Evan/Dropbox/Matlab/functions/');
-% cd 'C:/Users/Evan/Documents/UrbanSound8K'
-
 addpath(PATH_TO_FUNCTIONS);
 cd (PATH_TO_CLIPS)
 
