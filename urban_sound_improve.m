@@ -27,7 +27,8 @@ name_algo = 'boll';
 %name_algo = 'kamath';
 %name_algo = 'none';
 
-folder_source = 'fold8';
+% Choose the folder to filter
+folder_source = 'fold1';
 folder_dest = strcat(folder_source,'_',name_algo,'/');
 
 % Check if directory exists, create if not
