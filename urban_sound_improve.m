@@ -2,8 +2,15 @@ clc;
 clear;
 close all;
 
-PATH_TO_FUNCTIONS = 'C:/Users/Evan/Dropbox/Matlab/functions/';
-PATH_TO_CLIPS = 'C:/Users/Evan/Documents/UrbanSound8K';
+% Add path to spectral subtraction algorithms
+% https://www.mathworks.com/matlabcentral/fileexchange/7675-boll-spectral-subtraction?s_tid=srchtitle
+% https://www.mathworks.com/matlabcentral/fileexchange/7653-berouti-spectral-subtraction?s_tid=FX_rc1_behav
+% https://www.mathworks.com/matlabcentral/fileexchange/7674-multi-band-spectral-subtraction
+PATH_TO_FUNCTIONS = 'YOUR_PATH';
+
+% Add path to audio clips
+% https://urbansounddataset.weebly.com/download-urbansound8k.html
+PATH_TO_CLIPS = 'YOUR_PATH';
 
 % addpath('C:/Users/Evan/Dropbox/Matlab/functions/');
 % cd 'C:/Users/Evan/Documents/UrbanSound8K'
