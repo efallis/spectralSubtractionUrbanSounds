@@ -1,4 +1,4 @@
-# urbanSoundsSpectralSubtraction
+# Applying Spectral Subtraction to Urban Sounds
 
 This repository contains the scripts used for filtering and testing multiple urban sounds. An ideal audio clip is taken, then recorded again in a noisy environment. The recorded clip is filtered to see how closely the filtered clip matches the original clean audio clip.
 
