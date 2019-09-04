@@ -2,8 +2,10 @@ clc;
 clear;
 close all;
 
-cd 'C:/Users/Evan/Dropbox/Matlab'
-addpath('functions/');
+% Add path to audio clips
+PATH_TO_CLIPS = 'YOUR_PATH';
+
+cd (PATH_TO_CLIPS)
 
 SAMPLE_RATE = 44100;
 
