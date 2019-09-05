@@ -9,7 +9,7 @@ cd (PATH_TO_CLIPS)
 
 SAMPLE_RATE = 44100;
 
-% Pick your audio clips that were filtered
+% Pick your audio clips to be filtered
 name_audio = {'Human9';'Mechanical1';'Music17';'Nature1'};
 name_algo = {'No Algorithm';'Boll';'Berouti';'Kamath'};
 accuracy = length(name_algo);
