@@ -24,14 +24,14 @@ t_mic = (1:size(y_mic))/Fs_mic;
 
 y_mic = resample(y_mic,SAMPLE_RATE,Fs_mic);
 
-for i = 1:length(name_audio)
-    accuracy = zeros(length(name_algo),CLIP_SIZE);
-    accuracy_average = zeros(length(name_algo),1);
-    quality = zeros(length(name_algo),CLIP_SIZE);
-    quality_average = zeros(length(name_algo),1);
-    algorithm_signals = cell(length(name_algo),CLIP_SIZE);
-    algorithm_noise = cell(length(name_algo),CLIP_SIZE);
+accuracy = zeros(length(name_algo),CLIP_SIZE);
+accuracy_average = zeros(length(name_algo),length(name_audio));
+quality = zeros(length(name_algo),CLIP_SIZE);
+quality_average = zeros(length(name_algo),length(name_audio));
+algorithm_signals = cell(length(name_algo),CLIP_SIZE);
+algorithm_noise = cell(length(name_algo),CLIP_SIZE);
 
+for i = 1:length(name_audio)
     disp(name_audio{i});
     path_source = strcat(name_audio{i},'.wav');
     [y_source,Fs_source] = audioread(path_source);
@@ -61,16 +61,17 @@ for i = 1:length(name_audio)
         power_min = inf;
 
         % Find the FRAME_SIZE s clip at which the power is the lowest
+        step = SAMPLE_RATE*FRAME_SIZE;
         for k = 1:floor((length(y_mic_slice)/SAMPLE_RATE) / FRAME_SIZE)-1
-            power_signal = mean(abs(y_mic_slice(k*FRAME_SIZE*SAMPLE_RATE:(k+1)*FRAME_SIZE*SAMPLE_RATE)).^2);
+            power_signal = mean(abs(y_mic_slice(k*step:(k+1)*step)).^2);
             if power_signal < power_min
                 power_min = power_signal;
                 power_min_index = k;
             end
         end
 
-        clip_start = power_min_index*FRAME_SIZE*SAMPLE_RATE;
-        clip_end = (power_min_index + 1)*FRAME_SIZE*SAMPLE_RATE;
+        clip_start = power_min_index*step;
+        clip_end = (power_min_index + 1)*step;
 
         power_min = y_mic_slice(clip_start:clip_end);
 
@@ -90,9 +91,9 @@ for i = 1:length(name_audio)
 
             % Reconstruct the signal (put the first part back where it belongs)
             algorithm_signals{k}{j} = [
-                                        algorithm_signals{k}{j}(FRAME_SIZE*SAMPLE_RATE:min(FRAME_SIZE*SAMPLE_RATE+clip_start,end));
-                                        algorithm_signals{k}{j}(1:FRAME_SIZE*SAMPLE_RATE);
-                                        algorithm_signals{k}{j}(FRAME_SIZE*SAMPLE_RATE+clip_start:end)
+                                        algorithm_signals{k}{j}(step:min(step+clip_start,end));
+                                        algorithm_signals{k}{j}(1:step);
+                                        algorithm_signals{k}{j}(step+clip_start:end)
                                        ];
 
             subplot(length(name_algo),1,k);
@@ -131,10 +132,10 @@ for i = 1:length(name_audio)
     title(strrep(name_audio{i}, '_', ' '));
 
     for j = 1:length(name_algo)
-        accuracy_average(j) = mean(accuracy(j,1:10));
-        quality_average(j) = mean(quality(j,1:10));
+        accuracy_average(j,i) = mean(accuracy(j,1:10));
+        quality_average(j,i) = mean(quality(j,1:10));
     end
-    t = table(name_algo,accuracy_average,quality_average);
+    t = table(name_algo,accuracy_average(:,i),quality_average(:,i));
     t.Properties.VariableNames = {'Algorithm','Accuracy','SNR'};
     disp(t)
 end
